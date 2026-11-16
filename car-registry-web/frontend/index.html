@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Carros</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <main class="container">
+        <header class="header">
+            <h1>Registro de Carros</h1>
+            <p>Cadastre e consulte os veículos registrados no sistema.</p>
+        </header>
+
+        <section class="card">
+            <h2>Novo Cadastro</h2>
+            <form id="car-form" class="form">
+                <div class="field">
+                    <label for="brand">Marca</label>
+                    <input type="text" id="brand" name="brand" placeholder="Ex: Toyota, Chevrolet" required>
+                </div>
+
+                <div class="field">
+                    <label for="model">Modelo</label>
+                    <input type="text" id="model" name="model" placeholder="Ex: Corolla, Astra" required>
+                </div>
+
+                <div class="field-row">
+                    <div class="field">
+                        <label for="color">Cor</label>
+                        <input type="text" id="color" name="color" placeholder="Ex: Prata, Azul" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="year">Ano</label>
+                        <input type="number" id="year" name="year" placeholder="Ex: 2022" min="1886" max="2027" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary">Cadastrar Carro</button>
+            </form>
+
+            <div id="feedback" class="feedback" hidden></div>
+        </section>
+
+        <section class="card">
+            <div class="list-header">
+                <h2>Carros Cadastrados</h2>
+                <span id="car-count" class="badge">0</span>
+            </div>
+
+            <div id="cars-list" class="cars-list">
+                <p class="empty-state">Nenhum carro cadastrado ainda.</p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const form = document.getElementById("car-form");
+        const feedback = document.getElementById("feedback");
+        const carsList = document.getElementById("cars-list");
+        const carCount = document.getElementById("car-count");
+
+        function showFeedback(message, isError = false) {
+            feedback.textContent = message;
+            feedback.className = "feedback " + (isError ? "feedback-error" : "feedback-success");
+            feedback.hidden = false;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement("div");
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function renderCars(cars) {
+            carCount.textContent = cars.length;
+
+            if (cars.length === 0) {
+                carsList.innerHTML = '<p class="empty-state">Nenhum carro cadastrado ainda.</p>';
+                return;
+            }
+
+            carsList.innerHTML = cars.map((car, index) => `
+                <article class="car-item">
+                    <div class="car-item-top">
+                        <strong>#${index + 1} — ${escapeHtml(car.brand)} ${escapeHtml(car.model)}</strong>
+                        ${car.isToyota ? '<span class="tag-toyota">Toyota</span>' : ''}
+                    </div>
+                    <div class="car-details">
+                        <span>Cor: ${escapeHtml(car.color)}</span>
+                        <span>Ano: ${car.year}</span>
+                    </div>
+                </article>
+            `).join("");
+        }
+
+        async function loadCars() {
+            const response = await fetch("/api/cars");
+            const cars = await response.json();
+            renderCars(cars);
+        }
+
+        form.addEventListener("submit", async (event) => {
+            event.preventDefault();
+            feedback.hidden = true;
+
+            const payload = {
+                brand: form.brand.value,
+                model: form.model.value,
+                color: form.color.value,
+                year: Number(form.year.value)
+            };
+
+            try {
+                const response = await fetch("/api/cars", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    showFeedback(data.error || "Erro ao cadastrar carro.", true);
+                    return;
+                }
+
+                form.reset();
+                showFeedback("Carro cadastrado com sucesso!");
+                await loadCars();
+            } catch (err) {
+                showFeedback("Não foi possível conectar ao servidor.", true);
+            }
+        });
+
+        loadCars();
+    </script>
+</body>
+</html>

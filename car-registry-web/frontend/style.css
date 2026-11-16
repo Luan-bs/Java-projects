@@ -1,0 +1,194 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: #f3f5f9;
+    color: #1e293b;
+    line-height: 1.5;
+    padding: 2rem 1rem;
+}
+
+.container {
+    max-width: 720px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.header {
+    text-align: center;
+}
+
+.header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.header p {
+    color: #64748b;
+    margin-top: 0.25rem;
+}
+
+.card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
+    border: 1px solid #e2e8f0;
+}
+
+.card h2 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #0f172a;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.field label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #334155;
+}
+
+.field input {
+    padding: 0.65rem 0.85rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.field input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.btn-primary {
+    margin-top: 0.25rem;
+    padding: 0.75rem 1.25rem;
+    background-color: #2563eb;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.btn-primary:hover {
+    background-color: #1d4ed8;
+}
+
+.feedback {
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.feedback-success {
+    background-color: #dcfce7;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+}
+
+.feedback-error {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+
+.list-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.list-header h2 {
+    margin-bottom: 0;
+}
+
+.badge {
+    background-color: #e2e8f0;
+    color: #0f172a;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 0.2rem 0.65rem;
+    border-radius: 999px;
+}
+
+.cars-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.empty-state {
+    color: #64748b;
+    text-align: center;
+    padding: 1.5rem 0;
+}
+
+.car-item {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 0.9rem 1rem;
+    background-color: #f8fafc;
+}
+
+.car-item-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.tag-toyota {
+    background-color: #dbeafe;
+    color: #1e40af;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.15rem 0.55rem;
+    border-radius: 999px;
+}
+
+.car-details {
+    display: flex;
+    gap: 1.25rem;
+    margin-top: 0.35rem;
+    font-size: 0.9rem;
+    color: #475569;
+}
+
+@media (max-width: 520px) {
+    .field-row {
+        grid-template-columns: 1fr;
+    }
+}
