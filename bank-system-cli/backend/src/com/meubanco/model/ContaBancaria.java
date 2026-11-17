@@ -6,12 +6,10 @@ public class ContaBancaria {
     private String nome;
     private String cpf;
     
-    public ContaBancaria(String nome, String cpf, double saldoInicial) {
-        this.nome = nome;
-        this.cpf = cpf;
-        if (saldoInicial >= 0) {
-            this.saldo += saldoInicial;
-        }
+    public ContaBancaria(String nome, String cpf, double saldo) {
+        setNome(nome);
+        setCPF(cpf);
+        setSaldo(saldo);
     }
     
     public double getSaldo() {
@@ -25,7 +23,24 @@ public class ContaBancaria {
     public String getCpf() {
         return cpf;
     }
+
+    public void setNome(String nome) {
+        this.nome = nome; 
+    }
+
+    public void setCPF(String cpf) {
+        this.cpf = cpf;
+    }
     
+    public void setSaldo(double saldo) {
+        if (saldo >= 0) {
+            this.saldo = saldo;
+        } else {
+            System.out.println("Saldo inicial não pode ser negativo. Definido como 0.0.");
+            this.saldo = 0;
+        }
+    }
+
     public void depositar(double valor) {
         if (valor > 0) {
             this.saldo += valor;
